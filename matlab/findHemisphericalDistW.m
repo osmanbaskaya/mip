@@ -17,7 +17,6 @@ function [points, totalHD, regionalDist] = findHemisphericalDistW (sourceIm, mid
 %
 
 %  Author(s): Osman Baskaya <osman.baskaya@computer.org>
-
 %  $Date: 2010/11/20  
 
 

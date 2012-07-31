@@ -1,12 +1,12 @@
 function manualDepths = manualSulcalQuantification()
 
-%MANUALSULCALQUANTIFICATION This function calculates lengths of 
-% which sulci region that are not be able to calculate with automatically.
-% It also draws a yellow solid line between manually given points and 
-% saves the obtaining figures.
+%MANUALSULCALQUANTIFICATION This function calculates LENGTH of 
+%   which sulci region that are not be able to calculate with automatically.
+%   It also draws a yellow solid line between manually given points and 
+%   saves the obtaining figures on some figure path.
 % 
-% Author: Osman Baskaya <osman.baskaya@computer.org>
-% Date: 2012/05/28
+%   Author: Osman Baskaya <osman.baskaya@computer.org>
+%   Date: 2012/05/28
 
 
 figurePath = '/home/tyr/Programs/matlab12a/Library/MIP/figures/miccai12';
@@ -14,7 +14,7 @@ cd(figurePath);
 
 % for ref datasets
 % leftcoord = {{[103, 106], [342, 348]}; ...
-%              {[132, 137, 148, 149], [312, 311, 301, 301 ]};  ... %baharda sorun.
+%              {[132, 137, 148, 149], [312, 311, 301, 301 ]}; ... %baharda sorun.
 %              {[137, 141], [311, 313]}; ...
 %              {[91, 88], [200, 197]}; ...
 %              {[157, 166, 184, 188], [300, 311, 311, 315]}; ...
@@ -96,4 +96,6 @@ for k=1:number_of_data
     manualDepths = [manualDepths; [lengthL, lengthR]];
     
 end
+cd(oldPath);
+
 

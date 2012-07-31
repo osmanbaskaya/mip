@@ -1,17 +1,13 @@
 function allDepths = sulciQuantification(suffix, path, option)
-
-
-% This function helps to quantify length of important sulci and fissure 
-% such as central-sulcus and sylvian fissure.
+%SULCIQUANTIFICATION This function helps to quantify length of important 
+%   sulci and fissure such as central-sulcus and sylvian fissure.
+%   
+%   Sylvian fissure part has not been implemented yet.
 %
-% Author(s): Osman Baskaya <osman.baskaya@computer.org>
-%
-% $Date: 2012/05/14
+%   Author(s): Osman Baskaya <osman.baskaya@computer.org>
+%   Date: 2012/05/14
 
-
-
-tic
-DEPLOYPATH = '/home/tyr/Documents/datasets/mipdatasets/';
+DEPLOYPATH = '~/Documents/datasets/mipdatasets/';
 load LaplaceStruct
 
 %% Semi-Automated

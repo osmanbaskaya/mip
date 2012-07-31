@@ -1,7 +1,11 @@
 function [manualWidthL, manualWidthR] = manualSulcalWidthQuantification()
 
-%MANUALSULCALWIDTHQUANTIFICATION 
-% 
+%MANUALSULCALWIDTHQUANTIFICATION Provides sulcal width quantification when
+%   all width points given manually. This function was written only
+%   for demonstrate some results to some conference. This quantification
+%   function should be fully automatic at the end. For now, we need
+%   to give point pairs manually.
+%
 % Author: Osman Baskaya <osman.baskaya@computer.org>
 % Date: 2012/06/01
 
@@ -181,7 +185,7 @@ for k=1:number_of_data
     manualWidthR(k, 1) = sum(distances) / m; %avg
     manualWidthR(k, 2) = distances(round(m/2)); %median
     manualWidthR(k, 3) = distances(m); %max
-    cd('/home/tyr/Programs/matlab12a/Library/MIP/figures/miccai12/width/')
+    cd('~/Programs/matlab12a/Library/MIP/figures/miccai12/width/')
     saveas(gcf, strcat(dataName(1:end-4), 'WidthQuantificationManual.fig'));
     close all;
     cd(path)

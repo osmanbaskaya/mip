@@ -1,15 +1,14 @@
 function [brainSkull, distResults] = skullAdding (suffix, path)
 
-% NOT_1: Bu fonksiyon daha tamamlanmadı ve bazı işleri iki yapıyor.
-%
-% NAME:
-%     skullAdding - provides an  craial atrophy calculation.
+% NOT_1: Bu fonksiyon daha tamamlanmadı ve bazı işleri iki yapıyor!!
+% AtrophyCalc1, AtrophyCalc duzeltilmesi gerek.
+% SKULLADDING  Provides an  cranial atrophy calculation.
 %
 % SYNOPSIS:
 %     skullAdding('proportion_of_the_file_name', ['path'])
 %
 % DESCRIPTION:
-%    This function helps to calculate craial atrophy of that brain.
+%    This function helps to calculate cranial atrophy of that brain.
 %    To do this, function needs specific slice of a preprocessed* brain, and
 %    the cranium image. 
 %    Moreover, function supports regular expression while sending
@@ -29,9 +28,7 @@ function [brainSkull, distResults] = skullAdding (suffix, path)
 %  NOT_2: Polar Koordinat ekseni 1-2 bolge arasinda basliyor ve
 %       counter-clockwise yonunde doğru açı tarıyor.
 %
-
 %  Author(s): Osman Baskaya <osman.baskaya@computer.org>
-
 %  $Date: 2010/11/20
 
 %tic
@@ -58,9 +55,9 @@ patientName = [];
 for k=1:length(my_str)
     dataName = my_str(k).name;
     fprintf('%i) Data is %s\n', k, dataName );
-    [destIm1, sulcal1, hemisDist] = atrophyCalc1(dataName, '/home/tyra/data/brains');
-    [destIm, sulcal, hemisDist1] = atrophyCalc(dataName, '/home/tyra/data/brains');
-    cd('/home/tyra/data/skulls1');
+    [destIm1, sulcal1, hemisDist] = atrophyCalc1(dataName, '~/data/brains');
+    [destIm, sulcal, hemisDist1] = atrophyCalc(dataName, '~/data/brains');
+    cd('~/data/skulls1');
     outSkull = imread(dataName);
     outSkull = outSkull(:,:,1);
     outSkull = bwfill(outSkull);

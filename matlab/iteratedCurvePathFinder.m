@@ -1,7 +1,19 @@
 function [fullCurveLeft, fullCurveRight, C] = iteratedCurvePathFinder ...
     (I, seedPoints)
-
-% Kullanılıyor.
+% ITERATEDCURVEPATHFINDER This function measures the left and
+%   right central sulcus in iterative manner. That is, Laplace's
+%   equation are solved first and then normal vectors of laplace results 
+%   are used to determine the direction which we should follow. 
+%   Whenever we get stucked somewhere, whole process starts with
+%   the original image again until reaching the convex hull of skull.
+%   
+%   We follow this approach because narrow regions of input image, especially
+%   beginning of sulci, immediately goes one which provides us NaN when
+%   we calculate gradients of these pixels.
+%   
+%   
+%   Author: Osman Baskaya <osman.baskaya@computer.org>
+%   Date: 22/05/2012
 
 color = '--g';
 

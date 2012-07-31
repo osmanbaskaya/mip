@@ -1,7 +1,9 @@
 function [brainSkull, distResults, patients] = craniumQuantification ...
     (suffix, path, option)
-% CRANIUMQUANTIFICATION Provides an  craial atrophy calculation.
+% CRANIUMQUANTIFICATION Provides an  cranial atrophy calculation.
 %
+%   Problemler var. Iki kere calisma var bi fonk.
+%   
 % SYNOPSIS:
 %     skullAdding('proportion_of_the_file_name', ['path'])
 %
@@ -19,17 +21,12 @@ function [brainSkull, distResults, patients] = craniumQuantification ...
 %
 %
 %  CALL EXAMPLES :
-%   [brainSkull, distRes, p] = skullAdding('haciahmet','/home/tyra/data/brains', 'noverbose');
+%   [brainSkull, distRes, p] = craniumQuantification('haciahmet', '/home/tyra/data/brains', 'noverbose');
 %
 %  brainSkull is the image which has the cranium.
-%
-%  NOT_2: Polar Koordinat ekseni 1-2 bolge arasinda basliyor ve
-%       counter-clockwise yonunde doğru açı tarıyor.
-%
-
 %  Author(s): Osman Baskaya <osman.baskaya@computer.org>
-%  $Date: 2010/02/20
-% NOT_1: Bu fonksiyon daha tamamlanmadı ve bazı işleri iki yapıyor.
+%  $Date: 2012/02/20
+
 
 
 DEPLOYPATH = '/home/tyr/Documents/datasets/mipdatasets/';

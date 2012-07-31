@@ -1,8 +1,9 @@
 function [destIm, sulcal, hemisDist] = atrophyCalc1 (suffix, path, option)
 
 % NAME:
-%     atrophyCalc - provides an atrophy calculation.
-%
+%     atrophyCalc1 - provides an atrophy calculation.
+%     Bu fonkiyonu silip atrophyCalc'a silinecek piksel boyutu[800]
+%     eklemek gerekiyor. Yakinda gidecek bu fonk.
 % SYNOPSIS:
 %     atropyCalc('proportion_of_the_file_name' [,'path'])
 %

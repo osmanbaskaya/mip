@@ -1,24 +1,17 @@
 function midLineVec = findMidlineVec(sourceIm, option)
 
-
-% NAME:
-%     findMidlineVec - This function provides a line which never
+%FINDMIDLINEVEC - This function provides a line which never
 %     overlaps any white-matter, and gray-matter pixels.
-%         
-%
-% SYNOPSIS:
+%   
+%   SYNOPSIS:
 %     atropyCalc('proportion_of_the_file_name', ['path'])
 %
-% DESCRIPTION:
+%   DESCRIPTION:
 %    This function provides a line which never overlaps any
 %    pixels. But midline may be find. Because some brain
 %
-
-%  Author(s): Osman Baskaya <osman.baskaya@computer.org>
-
-%  $Date: 2010/11/20  
-
-
+%   Author(s): Osman Baskaya <osman.baskaya@computer.org>
+%   Date: 2010/11/20  
 
 [h, w] = size(sourceIm);
 global line_;

@@ -1,10 +1,12 @@
 function hashmap = getScores(dataset)
-
-% Bu fonksiyon dosya icinde bulunan tum sulcal gecen goruntulerden
-% bir hashmap kurar. hashmap: isim->expert's_scores
+%   GETSCORES   Bu fonksiyon dosya icinde bulunan ve "sulcal" kelimesi gecen 
+%   tum goruntulerden bir hashmap kurar. hashmap: isim->expert's_scores
+%
+%   Author: Osman Baskaya
+%   Date: 
 
 my_str = dir(['*','sulcal','*']);
-hashmap = java.util.HashMap;
+
 
 %% Expert's Scores
 
@@ -35,6 +37,7 @@ end
 
 
 %% Building the hashmap 
+hashmap = java.util.HashMap;
 
 for k=1:length(my_str)
     dataName = my_str(k).name;

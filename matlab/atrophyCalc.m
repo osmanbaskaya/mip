@@ -1,8 +1,9 @@
 function [destIm, sulcal, hemisDist] = atrophyCalc (suffix, path, option)
 
-% NAME:
-%     atrophyCalc - provides an atrophy calculation.
+% ATROPHYCALC   Provides an atrophy calculation. 
 %
+% TODO: Bir parametre daha alacak bu fonksiyon. O da silinecek label'in
+%   boyutu. 800 gibi 15 gibi. O arguman extract hemisphere fonk. verilecek.
 % SYNOPSIS:
 %     atropyCalc('proportion_of_the_file_name', ['path'])
 %
@@ -43,7 +44,7 @@ for i=1:length(my_str)
         fprintf('%i) Data is %s\n', i, dataName );
     end
     
-    [n_foo, sulcal] = extractHemispheres(dataName, option);
+    [n_foo, sulcal] = extractHemispheres(dataName, 25, option);
     %[n_foo, sulcal] = extractHemispheresDif(dataName);
     if (strcmp(option, 'verbose'))
         figure, imshow(n_foo), title(dataName);

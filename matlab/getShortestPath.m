@@ -1,12 +1,12 @@
 function [shortestPath, shortestPathLength] = getShortestPath(path)
 
-%GETSHORTESTPATH This function provides the shortest path and its length
-% by using Dijkstra's Algorithm.
+%GETSHORTESTPATH This function calculates the shortest path and its length
+%   of any path by using Dijkstra's Algorithm.
 %
-% More information: http://en.wikipedia.org/wiki/Dijkstra's_algorithm
+%   More information: http://en.wikipedia.org/wiki/Dijkstra's_algorithm
 %
-% Author: Osman Baskaya <osman.baskaya@computer.org>
-% Date: 2012/05/28
+%   Author: Osman Baskaya <osman.baskaya@computer.org>
+%   Date: 2012/05/28
 
 
 

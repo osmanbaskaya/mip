@@ -1,12 +1,17 @@
 function LaplaceStruct = getAllLaplacian(suffix, path)
+% GETALLLAPLACIAN Calculates all Laplace's equation of images.
+%   You need to save this struct (LaplaceStruct) if you do not want to
+%   calculate again.
+%
+%   Author: Osman Baskaya <osman.baskaya@computer.org>
+%   Date: 22/05/2012
 
-tic
+
 DEPLOYPATH = '/home/tyr/Programs/matlab12a/Data/';
-
 %% Get Data
 full_path = strcat(DEPLOYPATH, 'brains/', path);
 fprintf('%s\n\n', '#### Function: All Laplacian ####');
-
+tic
 
 [my_str, oldPath] = getData(suffix, full_path);
 
@@ -18,8 +23,6 @@ LaplaceStruct.dataNames = {};
 
 for k=1:number_of_data
     
- 
-    
 %% Read Data
     
     dataName = my_str(k).name;
@@ -29,17 +32,13 @@ for k=1:number_of_data
     LaplaceStruct.dataNames = {LaplaceStruct.dataNames{1:end}, dataName};
     
     
-% Laplacian Approach
+    % Laplacian Approach
     LapI = calculateLaplaceBrain(I);
     LaplaceStruct.LapIs = {LaplaceStruct.LapIs{1:end}, LapI};
-    
-
 end
-
+toc
 
 cd(oldPath);
-    
-toc
 end
 
 

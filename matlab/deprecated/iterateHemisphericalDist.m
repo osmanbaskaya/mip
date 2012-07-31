@@ -1,6 +1,4 @@
 function allWeightedResult = iterateHemisphericalDist(distAll, suffix)
-% ITERATEHEMISPHERICALDIST 
-
 
 dataFile = fopen('/home/tyra/Desktop/HemipspWeightedRes.txt', 'a+');
 

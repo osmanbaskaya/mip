@@ -1,14 +1,14 @@
 function checkBetSurf(suffix, path_raw, path_skulls)
-%CHECKBETSURF
+%CHECKBETSURF Bu fonksiyon betsurf'un guvenirligini kontrol etmek icin 
+%    yazildi. Orjinal data ile islenmis betsurf sonucunu ustuste oturtuyor.
 %
-%Bu fonksiyon betsurf'un guvenirligini kontrol etmek icin yazildi.
-%Orjinal data ile islenmis betsurf sonucunu ustuste oturtuyor.
+%   Example:
+%       checkBetSurf('png','/home/tyra/data/mri/yue', '/home/tyra/data/skulls/yue');
 %
-%Example: checkBetSurf('png','/home/tyra/data/mri/yue', '/home/tyra/data/skulls/yue');
-%Author: Osman Baskaya 
-%Date: 27/05/2011
+%   Author: Osman Baskaya 
+%   Date: 27/05/2011
 
-DEPLOYPATH = '/home/tyr/Programs/matlab/Data/';
+DEPLOYPATH = '/home/tyr/Programs/matlab12a/Data/';
 
 [data, oldPath] = getData(suffix, path_raw);
 [skulls, oldPath] = getData(suffix, path_skulls);

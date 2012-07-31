@@ -1,4 +1,9 @@
 function [depth, directions] = getSulcalDepth(seedPoint, Nx, Ny, J, color)
+% GETSULCALDEPTH Calculates the sulcal depth and all directions.
+%
+% Author: Osman Baskaya <osman.baskaya@computer.org>
+% Date: 22/05/2012
+
 
 directions = [];
 depth = 0;
@@ -10,13 +15,11 @@ for i=0:1:MAX_ITER
     a = Nx(y, x);
     b = Ny(y, x);
     
-   if (isnan(a + b))
-       break;
-   end
-      
-    [rx, ry] = findDirections(a, b);
+    if (isnan(a + b))
+        break;
+    end
     
-
+    [rx, ry] = findDirections(a, b);
     new_x = x + rx;
     new_y = y + ry;
     if ~isempty(directions)
@@ -25,9 +28,9 @@ for i=0:1:MAX_ITER
         end
     end
     
-   if(J(new_y, new_x) == 1)
-      break; 
-   end
+    if(J(new_y, new_x) == 1)
+        break;
+    end
     
     directions = [directions; [new_x, new_y]];
     %plot([x, new_x], [y, new_y], color) % color = --g like.
@@ -51,9 +54,9 @@ angle = atand(y/x);
 
 if (angle > -22.5 && angle <= 22.5)
     rx = 1; ry = 0;
-elseif (angle > 22.5 && angle <= 67.5) 
+elseif (angle > 22.5 && angle <= 67.5)
     rx = 1; ry = 1;
-elseif (angle > 67.5 && angle <= 90) 
+elseif (angle > 67.5 && angle <= 90)
     rx = 0; ry = 1;
 elseif (angle >-67.5 && angle <= -22.5)
     rx = 1; ry = -1;

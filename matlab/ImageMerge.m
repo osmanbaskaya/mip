@@ -1,7 +1,10 @@
 %Image Merge: Cranium + BET Results
-%Osman Baskaya
-%Gorsellik icin bu sadece. Betin uzerine ekleme yaparak
-%cranium kısmını daha iyi gorelim, doktorlara yollayalım diye
+%
+%Gorsellik icin bu sadece. BET'in uzerine ekleme yaparak
+%cranium kısmını daha iyi gorelim ve doktorlara yollayalım diye yazildi.
+%
+% Author: Osman Baskaya <osman.baskaya@computer.org
+% Date: 20/09/2010 tahmini
 
 cd('/home/tyra/Desktop/sulc/')
 close all
