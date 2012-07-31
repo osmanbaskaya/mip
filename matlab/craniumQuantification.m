@@ -3,6 +3,7 @@ function [brainSkull, distResults, patients] = craniumQuantification ...
 % CRANIUMQUANTIFICATION Provides an  cranial atrophy calculation.
 %
 %   Problemler var. Iki kere calisma var bi fonk.
+%   Cortical neden 800 ki? 25?
 %   
 % SYNOPSIS:
 %     skullAdding('proportion_of_the_file_name', ['path'])
@@ -33,7 +34,7 @@ DEPLOYPATH = '/home/tyr/Documents/datasets/mipdatasets/';
 
 %% Get the Data
 %close all
-clc
+%clc
 % if nargin == 1
 %     path = cd;
 % elseif nargin > 2
@@ -62,12 +63,9 @@ for k=1:number_of_data
     patientList.put(dataName, current_score);
     expert_scores = [expert_scores; current_score];
     fprintf('%i) Data is %s\n', k, dataName );
-    [destIm1, sulcal1, hemisDist] = atrophyCalc1(dataName, full_path, option);
-    [destIm, sulcal, hemisDist1] = atrophyCalc(dataName, full_path, option); % For Cortical Part
+    [destIm1, sulcal1, hemisDist] = atrophyCalc(dataName, full_path, 25, option);
+    [destIm, sulcal, hemisDist1] = atrophyCalc(dataName, full_path, 800, option); % For Cortical Part
     %cd('/home/tyr/Programs/matlab/Data/skulls/unutkanlik'); % Path that contains skull images.
-    
-
-    
     
     cd(strcat(DEPLOYPATH, 'skulls/', path)); % Path that contains skull images.
     outSkull = imread(dataName);
@@ -95,7 +93,6 @@ for k=1:number_of_data
     [x, y] = find(brainSkull == 1);
     x = x - centralPoint(1); % translation for x axis.
     y = y - centralPoint(2); % translation for y axis.
-    
     
     if (strcmp(option, 'verbose'))
         hold on, plot(centralPoint(2), centralPoint(1), 'ro') % Central Point.
