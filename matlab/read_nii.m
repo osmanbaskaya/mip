@@ -9,27 +9,33 @@ function I = read_nii(input)
 try
     s = load_nii(input);
 catch err
-    fprintf('%s is not a NII file. Trying to extract it.\n', input);
-    if isunix
-        if strcmpi('gz', input(end-1:end))
-            input = input(1:end-3); % removing ".gz" part.
-        else
-            fprintf('Input should be either gz file or nii file.\n');
-            fprintf('Program should be stopped.\n');
-            return; % for exit.
-        end
-        command = sprintf('gzip -d %s', input);
-        e = unix(command);
-        if e ~= 0
-            fprintf('Program should be stopped.\n');
-            return; % for exit.
-        end
-        s = load_nii(input);
-        disp('Successfully extracted.');
-    else %TODO gzip for Windows.
-        problem = 'UNIX not found. You should think twice when it comes to choosing OS\n';
-        fprintf(problem);
-    end
+    fprintf('Not a NII file: %s. Trying to extract it.\n', input);
+    inputs = gunzip(input);
+    s = load_nii(inputs{1});
+    
+%     There is already built-in gunzip function... The following code is
+%     not necessary anymore.
+%
+%     if isunix
+%         if strcmpi('gz', input(end-1:end))
+%             input = input(1:end-3); % removing ".gz" part.
+%         else
+%             fprintf('Input should be either gz file or nii file.\n');
+%             fprintf('Program should be stopped.\n');
+%             return; % for exit.
+%         end
+%         command = sprintf('gzip -d %s', input);
+%         e = unix(command);
+%         if e ~= 0
+%             fprintf('Program should be stopped.\n');
+%             return; % for exit.
+%         end
+%         s = load_nii(input);
+%         disp('Successfully extracted.');
+%     else %TODO gzip for Windows.
+%         problem = 'UNIX not found. You should think twice when it comes to choosing OS\n';
+%         fprintf(problem);
+%     end
 end
 
 I = s.img;

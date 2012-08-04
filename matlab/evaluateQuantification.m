@@ -1,5 +1,5 @@
 function [distances, s_distances, hem_corrK, cra_corrK, hem_corrP, ...
-    cra_corrP, patients] = evaluateQuantification(suffix, path, option)
+    cra_corrP, patients] = evaluateQuantification(suffix, datapath, slice_num, option)
 %   EVALUATEQUANTIFICATION It evaluates HCA and IHA. First two results
 %   are in terms of Kendall Corr. while next two rows shows Pearson
 %   Correlations.
@@ -8,10 +8,10 @@ function [distances, s_distances, hem_corrK, cra_corrK, hem_corrP, ...
 %       [distances, s_distances, hem_corrK, cra_corrK, hem_corrP, cra_corrP, patients] = evaluateQuantification('png', 'yue', 'noverbose')
 %
 %   Author: Osman Baskaya <osman.baskaya@computer.org>
-%   Last Revision: 2012/07/30
+%   1. Revision: 2012/07/30
 
-                          
-[~, distances, patients] = craniumQuantification(suffix, path, option);
+format long            
+[distances, patients] = craniumQuantification(suffix, datapath, slice_num, option);
 s_distances = sortrows(distances, 5)
 hem_corrK = corr(distances(:,2), distances(:,5), 'type', 'Kendall')
 cra_corrK = corr(distances(:,3), distances(:,5), 'type', 'Kendall')

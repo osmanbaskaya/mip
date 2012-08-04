@@ -16,7 +16,6 @@ function [points, totalHD] = findHemisphericalDist (sourceIm, mid, option)
 %   Author(s): Osman Baskaya <osman.baskaya@computer.org>
 %   Date: 2010/11/20
 
-DEPLOYPATH = '/home/tyr/Programs/matlab/Data/';
 
 [h, w] = size(sourceIm);
 jump = floor(h / 256);  % frequency of drawing lines.
@@ -24,6 +23,7 @@ jump = floor(h / 256);  % frequency of drawing lines.
 totalDist = 0;
 my_counter = 0;
 points = []; % points lists,
+
 
 for j=jump:jump:h
     %alttaki assignment, row'u alır ve 1 olanların indexini bulur
@@ -54,10 +54,10 @@ for j=jump:jump:h
     my_counter = my_counter + 1;
 end
 if (strcmp(option, 'verbose'))
-    fprintf('total distance is %i\n', totalDist);
-    fprintf('number of line is %i\n', my_counter);
+    fprintf('\t\t- Total distance is %i\n', totalDist);
+    fprintf('\t\t- Number of line is %i\n', my_counter);
 end
 totalHD  = totalDist / my_counter;
 if (strcmp(option, 'verbose'))
-    fprintf('average-distance is %f\n\n', totalHD);
+    fprintf('\t\t- Average-distance is %f\n', totalHD);
 end

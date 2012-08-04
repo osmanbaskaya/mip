@@ -1,4 +1,5 @@
-function [destIm, sulcal, hemisDist] = atrophyCalc (suffix, path, min_size, option)
+function [destIm, sulcal, hemisDist] = atrophyCalc (suffix, path, ...
+                                        min_size, slice_num, option)
 
 % ATROPHYCALC   Provides an atrophy calculation. 
 %
@@ -27,9 +28,8 @@ function [destIm, sulcal, hemisDist] = atrophyCalc (suffix, path, min_size, opti
 %clc
 if nargin == 1
     path = cd;
-elseif nargin > 4
-    fprintf('wrong number of arg');
-    return
+elseif nargin > 5
+    error('Wrong number of args!!\n');
 end
 
 %suffix = 'png';
@@ -44,7 +44,7 @@ for i=1:length(my_str)
         fprintf('%i) Data is %s\n', i, dataName );
     end
     
-    [n_foo, sulcal] = extractHemispheres(dataName, min_size, option);
+    [n_foo, sulcal] = extractHemispheres(dataName, min_size, slice_num, option);
     %[n_foo, sulcal] = extractHemispheresDif(dataName);
     if (strcmp(option, 'verbose'))
         figure, imshow(n_foo), title(dataName);

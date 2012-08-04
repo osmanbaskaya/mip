@@ -1,4 +1,4 @@
-function [distResults, patients] = craniumQuantification ...
+function [brainSkull, distResults, patients] = craniumQuantification ...
     (suffix, data_path, slice_num, option)
 % CRANIUMQUANTIFICATION Provides an  cranial atrophy calculation.
 %
@@ -57,17 +57,17 @@ image_files = getData(suffix, brain_full_path);
 
 %% Skull Adding
 
-D = [];
-patients = java.util.HashMap;
+all_distances = {};
+patientList = java.util.HashMap;
 number_of_data = length(image_files);
-expert_scores = zeros(number_of_data, 1);
+expert_scores = zeros(number_of_data);
 
 for k=1:number_of_data
     
     % Get the name of the data in image_files by one by.
     dataName = image_files(k).name;
     current_patient_score = get_patient_exp_score(dataName);
-    patients.put(dataName, current_patient_score);
+    patientList.put(dataName, current_patient_score);
     expert_scores(k) = current_patient_score;
     
     fprintf('%i) Data is %s\n', k, dataName);
@@ -83,9 +83,12 @@ for k=1:number_of_data
     FAST_brain = FAST_brain(:,:, slice_num);
     hemisDist = eval_IHA(FAST_brain, skull, dataName, 800, option);
     cortDist = eval_HCA(FAST_brain, skull, dataName, 25, option);
-    D = [D; [hemisDist, cortDist]]; 
+    distAll = [distAll; [hemisDist{1,2}, averageLineDistance]]; 
 end
 
-distResults = [(1:number_of_data)', D, D(:,1)+D(:,2), expert_scores];
+distResults = [(1:number_of_data)', distAll, distAll(:,1)+distAll(:,2) expert_scores];
+%distResults = [[1:number_of_data]', distAll, distAll(:,1)+distAll(:,2) expert_scores];
+patients = patientList;
+format short
 end
 
