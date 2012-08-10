@@ -1,12 +1,10 @@
-function [brainSkull, distResults, patients] = craniumQuantification ...
+function [distResults, patients] = atrophy_quantification ...
     (suffix, data_path, slice_num, option)
 % CRANIUMQUANTIFICATION Provides an  cranial atrophy calculation.
 %
-%   Problemler var. Iki kere calisma var bi fonk.
-%   Cortical neden 800 ki? 25?
 %   
 % SYNOPSIS:
-%     craniumQuantification('gz','registered/0.5mm', 'reg', 'noverbose')
+%     atrophy_quantification('gz','registered/0.5mm', 'reg', 'noverbose')
 %     craniumQuantification('png','yue', 'yue', 'noverbose')
 %
 % DESCRIPTION:
@@ -32,10 +30,11 @@ function [brainSkull, distResults, patients] = craniumQuantification ...
 %% Definition of some constants and setting some options
 
 DATASET_PATH = '/home/tyr/Documents/datasets/mipdatasets/';
-BRAIN_PATH = 'brains/';
+BRAIN_PATH = 'fast/';
 SKULL_PATH = 'skulls/';
 
 format long
+
 
 %% Get the Data
 %close all
@@ -54,41 +53,49 @@ if (strcmp(option, 'verbose'))
 end
 
 image_files = getData(suffix, brain_full_path);
-
-%% Skull Adding
-
-all_distances = {};
-patientList = java.util.HashMap;
 number_of_data = length(image_files);
-expert_scores = zeros(number_of_data);
+
+%% Slice check
+
+if length(slice_num) == 1
+    slice_num = repmat(slice_num, 1, number_of_data);
+else
+    if length(slice_num) ~= number_of_data
+        error('Length of slice array is not equal length of the number_of_data');
+    end
+end
+
+
+%% Atrophy Quantification
+
+D = [];
+patients = java.util.HashMap;
+expert_scores = zeros(number_of_data, 1);
 
 for k=1:number_of_data
     
     % Get the name of the data in image_files by one by.
-    dataName = image_files(k).name;
-    current_patient_score = get_patient_exp_score(dataName);
-    patientList.put(dataName, current_patient_score);
+    dataname = image_files(k).name;
+    current_patient_score = get_patient_exp_score(dataname);
+    patients.put(dataname, current_patient_score);
     expert_scores(k) = current_patient_score;
     
-    fprintf('%i) Data is %s\n', k, dataName);
+    fprintf('%i) Data is %s\n', k, dataname);
     
     % Read Betsurf output and related slice.
-    skull = read_mri(dataName, skull_full_path);
-    skull = skull(:,:, slice_num);
-    
-
-        
+    skull = read_mri(dataname, skull_full_path);
+    skull = skull(:,:, slice_num(k));
+         
     % Read Fast output and related slice.
-    FAST_brain = read_mri(dataName, brain_full_path);
-    FAST_brain = FAST_brain(:,:, slice_num);
-    hemisDist = eval_IHA(FAST_brain, skull, dataName, 800, option);
-    cortDist = eval_HCA(FAST_brain, skull, dataName, 25, option);
-    distAll = [distAll; [hemisDist{1,2}, averageLineDistance]]; 
+    FAST_brain = read_mri(dataname, brain_full_path);
+    FAST_brain = FAST_brain(:,:, slice_num(k));
+    
+    % Evaluate the IHA and HCA
+    hemisDist = eval_IHA(FAST_brain, skull, dataname, 800, option);
+    cortDist = eval_HCA(FAST_brain, skull, dataname, 25, option);
+    
+    D = [D; [hemisDist, cortDist]]; 
 end
-
-distResults = [(1:number_of_data)', distAll, distAll(:,1)+distAll(:,2) expert_scores];
-%distResults = [[1:number_of_data]', distAll, distAll(:,1)+distAll(:,2) expert_scores];
-patients = patientList;
-format short
+distResults = [(1:number_of_data)', D, D(:,1)+D(:,2), expert_scores];
 end
 

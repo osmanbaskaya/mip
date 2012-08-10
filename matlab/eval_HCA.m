@@ -1,4 +1,5 @@
-function corticalDist = eval_HCA (I, skull, dataName, min_size, option)
+function corticalDist = eval_HCA (I, skull, dataname, min_size, option)
+
 
 tic
 
@@ -51,7 +52,7 @@ numberOfLine = 0;
 totalLineLength = 0;
 
 if (strcmp(option, 'verbose'))
-    figure, imshow(brainSkull);
+    figure, imshow(brainSkull), title(dataname);
     hold on, plot(centralPoint(2), centralPoint(1), 'ro') % Central Point.
 end
 
@@ -107,12 +108,15 @@ end
 skullRadius = calculateSkullRadius(skull);
 corticalDist = (totalLineLength / numberOfLine) / skullRadius;
 
+
+
+
 if (strcmp(option, 'verbose'))
-    fprintf('\n***Cranial distance Calculation***\n\n');
-    fprintf('Length of the all lines is %i\n', totalLineLength);
-    fprintf('Number of line is %i\n', numberOfLine);
-    fprintf('Radius of the Cranium is %i\n', skullRadius);
-    fprintf('Average-distance is %f\n\n', averageLineDistance);
+    saveas(gcf, strcat(dataname(1:end-4), 'HCA.png'))
+    fprintf('\t\t- Length of the all lines is %i\n', totalLineLength);
+    fprintf('\t\t- Number of line is %i\n', numberOfLine);
+    fprintf('\t\t- Radius of the Cranium is %i\n', skullRadius);
+    fprintf('\t\t- Cortical Distance is %f\n\t', corticalDist);
 end
 toc
 end

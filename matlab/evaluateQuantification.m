@@ -10,6 +10,7 @@ function [distances, s_distances, hem_corrK, cra_corrK, hem_corrP, ...
 %   Author: Osman Baskaya <osman.baskaya@computer.org>
 %   1. Revision: 2012/07/30
 
+close all
 format long            
 [distances, patients] = craniumQuantification(suffix, datapath, slice_num, option);
 s_distances = sortrows(distances, 5)
