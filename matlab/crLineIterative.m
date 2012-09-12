@@ -35,7 +35,7 @@ while (1)
     finish = line_(end, :);
     if (finish(1) > h-2)
         if (strcmp(option, 'verbose'))
-            %plot(line_(:,2), line_(:,1), 'y')
+            plot(line_(:,2), line_(:,1), 'y')
         end
         return
     end

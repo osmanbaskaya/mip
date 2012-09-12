@@ -1,26 +1,55 @@
 function slice_test()
 
-% Slice Test for IHA and HCA 
+% Tek bir slice icin yazilan testler.
+
+%% Some Initialization
+
+% Slice Test for IHA and HCA
 
 clear
 close all
 
 IMAGE_PATH = '~/Documents/datasets/mipdatasets/test_images';
-fileID = fopen('~/Desktop/results1.txt', 'w');
+fileID = fopen('~/Desktop/results1.txt', 'w+');
 
 %% Tests No:1
 
 % Dataset: 'register/alidemir'
 % Perfect Registration (Her hasta icin tek bir kesit)
 
-
 dataset = 'register/alidemir';
 path = strcat(IMAGE_PATH, '/', dataset, '/');
-
 
 fprintf(fileID, 'TEST RESULTS: %s\n\n', dataset);
 
 for slice_num=20:35
+
+    close all
+    cd(path);
+    folder = int2str(slice_num);
+    try
+        cd(folder);
+    catch err
+        mkdir(folder);
+        cd(folder);
+    end
+
+
+    D = atrophy_quantification('nii', dataset, slice_num, 'verbose');
+    %write_all_scores(fileID, D, slice_num)
+
+end
+%% Test No:2
+
+% Dataset: 'register/MNI/1mm'
+% Perfect Registration (Her hasta icin tek bir kesit)
+
+dataset = 'register/MNI/1mm';
+path = strcat(IMAGE_PATH, '/', dataset, '/');
+
+fprintf(fileID, '\n\nTEST RESULTS: %s\n\n', dataset);
+
+for slice_num=107:141
     
     close all
     cd(path);
@@ -32,25 +61,45 @@ for slice_num=20:35
         cd(folder);
     end
     
+    D = atrophy_quantification('nii', dataset, slice_num, 'verbose');
+    %D = atrophy_quantification('mahir', dataset, 124, 'verbose');
+    %write_all_corr_scores(fileID, D, slice_num)
+    
+    
+    
+end
+
+%% Test No:3
+
+% Dataset: 'register/MNI/alidemir/1mm'
+% Perfect Registration (Her hasta icin tek bir kesit)
+
+dataset = 'register/MNI/alidemir/1mm';
+path = strcat(IMAGE_PATH, '/', dataset, '/');
+
+fprintf(fileID, '\n\nTEST RESULTS: %s\n\n', dataset);
+
+for slice_num=100:140
+    
+    close all
+    cd(path);
+    folder = int2str(slice_num);
+    try
+        cd(folder);
+    catch err
+        mkdir(folder);
+        cd(folder);
+    end
     
     D = atrophy_quantification('nii', dataset, slice_num, 'verbose');
-    write_all_scores(fileID, D, slice_num)
-    
-    
-    
+    write_all_corr_scores(fileID, D, slice_num)
 end
-%% Test No:2
-
-
-
-
-
-
-
 
 end
 
-function write_all_scores(fileID, D, slice_num)
+
+
+function write_all_corr_scores(fileID, D, slice_num)
 
 % Data
 IHA = D(:,2);
@@ -76,4 +125,7 @@ fprintf(fileID, '\t\tKendall Score: %.10f, Number of Sample:%d\n', corr_HCA_K, n
 fprintf(fileID, '\t\tPearson Score: %.10f, Number of Sample:%d\n\n', corr_HCA_P, num);
 
 end
+
+
+
 

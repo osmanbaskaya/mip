@@ -1,4 +1,4 @@
-function [depth, directions] = getSulcalDepth(seedPoint, Nx, Ny, J, color)
+function [depth, directions] = getSulcalDepth3D(seedPoint, Nx, Ny, Nz, color)
 % GETSULCALDEPTH Calculates the sulcal depth and all directions.
 %
 % Author: Osman Baskaya <osman.baskaya@computer.org>
@@ -9,35 +9,40 @@ directions = [];
 depth = 0;
 x = seedPoint(1);
 y = seedPoint(2);
+z = seedPoint(3);
 
 MAX_ITER = 1000;
 for i=0:1:MAX_ITER
-    a = Nx(y, x);
-    b = Ny(y, x);
+    a = Nx(y, x, z);
+    b = Ny(y, x, z);
+    c = Nz(y, x, z);
     
-    if (isnan(a + b))
+    if (isnan(a + b + c)) % Any of them is NaN?
         break;
     end
     
-    [rx, ry] = findDirections(a, b);
+    [rx, ry, rz] = findDirections(a, b, c);
     new_x = x + rx;
     new_y = y + ry;
+    new_z = z + rz;
     if ~isempty(directions)
-        if ~isempty(find(directions(:,1) == new_x & directions(:,2) == new_y, 1))
-            break;
+        if ~isempty(find(directions(:,1) == new_x & ... 
+                    directions(:,2) == new_y & directions(:,3) == new_z, 1))
+            break;  % Kendini tekrar ediyorsa: Dur.
         end
     end
     
-    if(J(new_y, new_x) == 1)
-        break;
-    end
+%     if(J(new_y, new_x) == 1)
+%         break; % Skull'a geldiysek: Dur
+%     end
     
-    directions = [directions; [new_x, new_y]];
+    directions = [directions; [new_x, new_y, new_z]];
     %plot([x, new_x], [y, new_y], color) % color = --g like.
     x = new_x;
     y = new_y;
+    z = new_z;
     
-    depth = depth + sqrt(rx^2 + ry^2);
+    depth = depth + sqrt(rx^2 + ry^2 + rz^2);
     
     if (i >= MAX_ITER)
         fprintf('Maximum iteration (%d) is exceeded.\n', MAX_ITER);
@@ -48,10 +53,12 @@ end
 
 %% Find Directions
 
-function [rx, ry] = findDirections(x, y)
+function [rx, ry, rz] = findDirections(x, y, z)
 
+
+
+% For X-Y Plane
 angle = atand(y/x);
-
 if (angle > -22.5 && angle <= 22.5)
     rx = 1; ry = 0;
 elseif (angle > 22.5 && angle <= 67.5)
@@ -67,5 +74,18 @@ end
 if (x <= 0 && y <= 0) || (x < 0 && y >= 0)
     rx = -rx; ry = -ry;
 end
+
+
+% For Z axes
+if (z >= 0.33)
+    rz = 1;
+elseif (z >= -0.33 && z < 0.33)
+    rz = 0;
+elseif(z >= -1 && z < 0.33)
+    rz = -1;
+else
+    error('z=%f için yukarıdaki bölgelere girmiyor. Girmesi gerek.', z);
+end
+
 
 end

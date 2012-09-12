@@ -1,11 +1,9 @@
 function [Nx, Ny, Nz] = getNormalVectorsOfLaplacian(LapI)
-% GETNORMALVECTORSOFLAPLACIAN This function calculates and returns
-%   normal vectors of a vector which obtained by solving Laplace's Eqn.
-%   Given vector can be 2D or 3D. Distance metric is L2.
-%   
-%   Author: Osman Baskaya
-%   Date: May 2012
-%   Revision1: Sept 2012 - Adding 3D feature - Osman Baskaya
+% GETNORMALVECTORSOFLAPLACIAN
+
+% Author: Osman Baskaya
+% Date: May 2012
+% Revision1: Sept 2012 - Adding 3D feature
 
 
 s = length(size(LapI));

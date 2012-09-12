@@ -4,8 +4,9 @@ function [distResults, patients] = atrophy_quantification ...
 %
 %   
 % SYNOPSIS:
-%     atrophy_quantification('gz','registered/0.5mm', 'reg', 'noverbose')
-%     craniumQuantification('png','yue', 'yue', 'noverbose')
+%     atrophy_quantification('gz','register/MNI/1mm', 133, 'noverbose')
+%     atrophy_quantification('nii', 'register/alidemir', [20,20,10,10,10,10,10,10], 'no')
+
 %
 % DESCRIPTION:
 %    This function helps to calculate cranial atrophy of that brain.
@@ -18,10 +19,6 @@ function [distResults, patients] = atrophy_quantification ...
 %    Default path is result of !pwd.
 %
 %    [*] preprocessed: This function needs output of the FAST (FMRIB tool)
-%
-%
-%  CALL EXAMPLES :
-%   [brainSkull, distRes, p] = craniumQuantification('haciahmet', '/home/tyra/data/brains', 'noverbose');
 %
 %  brainSkull is the image which has the cranium.
 %  Author(s): Osman Baskaya <osman.baskaya@computer.org>
@@ -57,11 +54,14 @@ number_of_data = length(image_files);
 
 %% Slice check
 
-if length(slice_num) == 1
+n_slice = length(slice_num);
+
+if n_slice == 1
     slice_num = repmat(slice_num, 1, number_of_data);
 else
-    if length(slice_num) ~= number_of_data
-        error('Length of slice array is not equal length of the number_of_data');
+    if n_slice ~= number_of_data
+        error('Length of slice array (%d) is not equal length of the number_of_data (%d)', ...
+                        n_slice, number_of_data);
     end
 end
 
@@ -91,7 +91,7 @@ for k=1:number_of_data
     FAST_brain = FAST_brain(:,:, slice_num(k));
     
     % Evaluate the IHA and HCA
-    hemisDist = eval_IHA(FAST_brain, skull, dataname, 800, option);
+    hemisDist = eval_IHA(FAST_brain, skull, dataname, 400, option);
     cortDist = eval_HCA(FAST_brain, skull, dataname, 25, option);
     
     D = [D; [hemisDist, cortDist]]; 

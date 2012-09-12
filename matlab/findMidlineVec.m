@@ -31,7 +31,7 @@ line2 = zeros(h,1);
 h0 = 1;
 cand = [-1, -1]; % Initial values.
 total = -1;
-for i=deg:deg+20
+for i=deg-20:deg+20
     line = sourceIm(h0:end,i);
     total = sum(line);
     if total == 0
@@ -56,8 +56,6 @@ if total == 0
 end
 
 %backtracking:
-%Problem:En temiz sekilde bi straight line ciziyor ve backtrack baslatiyor.
-%ve daha sonra backtrack baslatılıyor.
 %Cozum. Backtrack icin sadece o en uzun temiz line'ı parametre olarak yolla
 % en bastan baslasın cizim....
 line2(h0:cand(1),2) = cand(2);

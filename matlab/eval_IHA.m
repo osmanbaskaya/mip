@@ -5,6 +5,7 @@ function hemisDist = eval_IHA(I, skull, dataname, min_size, option)
 %  CALL EXAMPLES :
 %  Author(s): Osman Baskaya <osman.baskaya@computer.org>
 %  $Date: 2010/11/20
+%  Revision: August, 2012
 
 tic
 if nargin > 5

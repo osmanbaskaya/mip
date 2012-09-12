@@ -31,6 +31,7 @@ def main():
         
     os.chdir(directory)
     make_lower()
+    #rename() #betsurf
     rename('__seg') #fast
 
 if __name__ == '__main__':

@@ -50,7 +50,7 @@ def runFSLBET(command, args, files, suffix = '.hdr'):
         args[1] = f
         args[2] = f.replace(suffix, '_brain')
         #args[2] = "BETSURF/" + args[2] # for betsurf
-        args[2] = "BET/" + args[2]
+        args[2] = "BETSURF/" + args[2]
         p_id = os.fork()
         start = time()
         if p_id == 0: # child process.

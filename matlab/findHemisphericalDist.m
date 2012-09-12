@@ -18,7 +18,8 @@ function [points, totalHD] = findHemisphericalDist (sourceIm, mid, option)
 
 
 [h, w] = size(sourceIm);
-jump = floor(h / 256);  % frequency of drawing lines.
+%jump = ceil(h / 256); % frequency of drawing lines. | Some problems.
+jump = 1;
 % our treshold is midlineIndex.
 totalDist = 0;
 my_counter = 0;
