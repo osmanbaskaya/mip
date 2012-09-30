@@ -9,7 +9,12 @@ function I = read_nii(input)
 try
     s = load_nii(input);
 catch err
-    fprintf('Not a NII file: %s. Trying to extract it.\n', input);
+    if isempty(err.identifier)
+        fprintf('Not a NII file: %s. Trying to extract it.\n', input);
+    else
+        error(err.message)
+    end
+    
     inputs = gunzip(input);
     s = load_nii(inputs{1});
     
