@@ -1,3 +1,6 @@
+% SLice Testiyle elde edilen korelasyon degerlerinin
+% grafiklerini cizmek icin kullanilan script
+
 %PATH = '/home/tyr/Desktop/plot/register-MNI-1mm-5/';
 PATH = '/home/tyr/Desktop/plot/whole-MNI-1mm-3/';
 

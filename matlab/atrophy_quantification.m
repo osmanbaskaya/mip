@@ -5,7 +5,7 @@ function [distResults, patients] = atrophy_quantification ...
 %   
 % SYNOPSIS:
 %     atrophy_quantification('gz','register/MNI/1mm', 133, 'noverbose')
-%     atrophy_quantification('nii', 'register/alidemir', [20,20,10,10,10,10,10,10], 'no')
+%     atrophy_quantification('nii', 'register/alidemir', [20,20,10,10,10,10,10,10], 'verbose')
 
 %
 % DESCRIPTION:
@@ -91,8 +91,8 @@ for k=1:number_of_data
     FAST_brain = FAST_brain(:,:, slice_num(k));
     
     % Evaluate the IHA and HCA
-    hemisDist = eval_IHA(FAST_brain, skull, dataname, 400, option);
-    cortDist = eval_HCA(FAST_brain, skull, dataname, 25, option);
+    hemisDist = eval_IHA(FAST_brain, skull, dataname, 0.003, option);
+    cortDist = eval_HCA(FAST_brain, skull, dataname, 0.000127, option);
     
     D = [D; [hemisDist, cortDist]]; 
 end

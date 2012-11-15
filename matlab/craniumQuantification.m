@@ -21,10 +21,6 @@ function [distResults, patients] = craniumQuantification ...
 %
 %    [*] preprocessed: This function needs output of the FAST (FMRIB tool)
 %
-%
-%  CALL EXAMPLES :
-%   [brainSkull, distRes, p] = craniumQuantification('haciahmet', '/home/tyra/data/brains', 'noverbose');
-%
 %  brainSkull is the image which has the cranium.
 %  Author(s): Osman Baskaya <osman.baskaya@computer.org>
 %  $Date: 2012/02/20

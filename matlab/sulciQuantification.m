@@ -1,6 +1,6 @@
-function allDepths = sulciQuantification(suffix, path, option)
+function allDepths = sulciQuantification(suffix, path, slice_num, option)
 %SULCIQUANTIFICATION This function helps to quantify length of important 
-%   sulci and fissure such as central-sulcus and sylvian fissure.
+%   sulci and fissures such as central-sulcus and sylvian fissure.
 %   
 %   Sylvian fissure part has not been implemented yet.
 %
@@ -8,7 +8,7 @@ function allDepths = sulciQuantification(suffix, path, option)
 %   Date: 2012/05/14
 
 DEPLOYPATH = '~/Documents/datasets/mipdatasets/';
-load LaplaceStruct
+%load LaplaceStruct
 
 %% Semi-Automated
 
@@ -38,8 +38,9 @@ if (strcmp(option, 'verbose'))
     fprintf('\n\n%s\n\n', '****** Sulci Quantification ******');
 end
 
-[my_str, oldPath] = getData(suffix, full_path);
-scores = getScores(path);
+my_str = getData(suffix, full_path);
+
+%patients = java.util.HashMap;
 
 %patientList = java.util.HashMap;
 expert_scores = [];
@@ -48,24 +49,30 @@ number_of_data = length(my_str);
 allDepths = zeros(number_of_data, 2);
 
 for k=1:number_of_data
-    dataName = my_str(k).name;
-    current_score = scores.get(dataName);
+    dataname = my_str(k).name;
+    %current_score = scores.get(dataName);
     %patientList.put(dataName, current_score);
-    expert_scores = [expert_scores; current_score];
-    fprintf('%i) Data is %s\n', k, dataName );
+    current_patient_score = get_patient_exp_score(dataname);
+    %patients.put(dataname, current_patient_score);
+    expert_scores = [expert_scores; current_patient_score];
+    fprintf('%i) Data is %s\n', k, dataname );
     
 %% Read Data
-    I = imread(dataName);
-    I = I(:,:, 1);
+    %I = imread(dataname);
+    %I = I(:,:, 1);
+    I = read_mri(dataname, full_path);
+    I = I(:,:,slice_num);
+    I = imrotate(I, 90); % corrected the rotation.
+    
     
 %% Laplacian Approach
-    %LapI = calculateLaplaceBrain(I, 1); 
+    LapI = calculateLaplaceBrain(I, 100); 
     
     % We have LaplaceStruct! 
     % Tum beyinlerin Laplace Equation'larini cozen fonksiyon:
     % getAllLaplacian.m
     % Ref haric goruntuler icin LapI tekrar hesaplanmali.
-    LapI = LaplaceStruct.LapIs{k};
+    %LapI = LaplaceStruct.LapIs{k};
     [Nx, Ny] = getNormalVectorsOfLaplacian(LapI);
     
 %% Sulcal Depth Calculation

@@ -5,7 +5,7 @@ function score = get_patient_exp_score(dataName)
 %   Author: Osman Baskaya
 %   Date: 03/08/2012
 
-score = -1; % initial. score should not be -1.
+score = -1; % initial
 
 %% Experts' Scores
 
@@ -14,6 +14,8 @@ score = -1; % initial. score should not be -1.
 % DemansSkalalama/Demans_DataRatings_BAHUN betul_ORJİNAL.xls
 % dosyalarindan alindi.
 
+
+dataName = lower(dataName); % string lowercase for comparison
 
 patients = {
             {'baharpelin', 1}, ...

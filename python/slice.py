@@ -159,7 +159,7 @@ def interval_test():
     corr_test_HCA('%s-HCA-%d-%s.txt' % (DATASET[:-4], size, e), size, interval, e=e)
 
     w = create_window(size, weight_type='linear')
-    print w
+    #print w
 
     corr_test_IHA('%s-IHA-%d-%s-Weighted.txt' % (DATASET[:-4], size, e), size, interval, w=w, e=e)
     corr_test_HCA('%s-HCA-%d-%s-Weighted.txt' % (DATASET[:-4], size, e), size, interval, w=w, e=e)
@@ -185,8 +185,6 @@ def eval_perf_atrophy(slices, window, data, eval_type, ind=HCA, f=None):
 
     size = len(window)
     n_slices = (size-1) / 2
-
-
     patients = []
     for i, slice in enumerate(slices):
         k = []
@@ -210,6 +208,7 @@ def eval_perf_atrophy(slices, window, data, eval_type, ind=HCA, f=None):
     nan = np.isnan(atrophy)
     pred = atrophy[~nan].tolist()[0]
     actual = expert[~nan].tolist()[0]
+    #print "actual: ", actual
     res = pearsonr(pred, actual)
     #print "({0}-{1}), size: {2}, {3}".format(i, i+j, len(pred), res[0])
     #print "{0},{1},{2},{3},{4}".format(i, i+j, len(pred), res[0], res[1])
@@ -217,10 +216,11 @@ def eval_perf_atrophy(slices, window, data, eval_type, ind=HCA, f=None):
         f.write("{0},{1},{2},{3}\n".format(i, i+j, len(pred), res[0]))
     else:
         print "\t{0},{1},{2}".format(size, len(pred), res[0])
+        print len(pred), len(actual)
 
 def perfect_reg_test(region, data=DATA, eval_type='mean', size=1, win_type='uniform'):
 
-    cent_slices = [134, 133, 130, 129, 130, 125, 132, 128] #central sulci
+    cent_slices = [134, 133, 130, 129, 130, 125, 132, 128] #central s)ulci
     if region == IHA:
         perf_corr_IHA(cent_slices, eval_type, size=size, win_type=win_type)
     elif region == HCA:
@@ -238,12 +238,12 @@ def main():
     #print 'median HCA'
     #for i in xrange(1, 10, 2):
         #perfect_reg_test(HCA, eval_type='median', size=i)
-    #print 'mean IHA'
-    #for i in xrange(1, 10, 2):
-        #perfect_reg_test(IHA, eval_type='mean', size=i, win_type='uniform')
-    #print 'mean HCA'
-    #for i in xrange(1, 10, 2):
-        #perfect_reg_test(HCA, eval_type='mean', size=i, win_type='uniform')
+    print 'mean IHA'
+    for i in xrange(1, 10, 2):
+        perfect_reg_test(IHA, eval_type='mean', size=i, win_type='uniform')
+    print 'mean HCA'
+    for i in xrange(1, 10, 2):
+        perfect_reg_test(HCA, eval_type='mean', size=i, win_type='uniform')
 
     #print 'linear IHA'
     #for i in xrange(1, 10, 2):

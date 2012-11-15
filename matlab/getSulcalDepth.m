@@ -37,6 +37,8 @@ for i=0:1:MAX_ITER
     x = new_x;
     y = new_y;
     
+    % Goruntu Z yonunde isotrophic degil. O yuzden depth
+    % hesabinda her koordinati mm'ye cevirmek gerekiyor!!! 
     depth = depth + sqrt(rx^2 + ry^2);
     
     if (i >= MAX_ITER)
@@ -50,6 +52,8 @@ end
 
 function [rx, ry] = findDirections(x, y)
 
+% Tekrar bak!!!
+
 angle = atand(y/x);
 
 if (angle > -22.5 && angle <= 22.5)
@@ -60,7 +64,7 @@ elseif (angle > 67.5 && angle <= 90)
     rx = 0; ry = 1;
 elseif (angle >-67.5 && angle <= -22.5)
     rx = 1; ry = -1;
-elseif (angle >= -90 && angle <= 67.5)
+elseif (angle >= -90 && angle <= -67.5) % 67.5 idi eskiden. Dogru mu??
     rx = 0; ry = -1;
 end
 

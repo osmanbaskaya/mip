@@ -1,7 +1,7 @@
 function [LapI] = calculateLaplaceBrain (I, max_iter)
 
 %load lap
-I = I > 150; % removing all csf regions and other regions are 1 now.
+I = I > 1; % removing all csf regions and other regions are 1 now.
 %I = or(I, outSkull);
 %I = bwperim(I, 8);
 

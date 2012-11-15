@@ -16,7 +16,7 @@ brainSkull = imrotate(brainSkull, 90); % nii images should be rotated.
 %% Cartesian to Polar 
 
 [w, h] = size(brainSkull);
-centralPoint = [w/2, h/2]; % Central point of our brain.
+centralPoint = [w/2, h/2]; % Central point of our image.
 
 
 [x, y] = find(brainSkull == 1); % these coordinates should be transform
@@ -30,7 +30,7 @@ y = y - centralPoint(2); % translation for y axis.
 
 %% Constants
 
-INCR = 0.01; % 5 degree = 0.0436 Radian, default: 0.0236
+INCR = 0.01; % 5 degree = 0.0436 Radian
 TOL = 0.0150; % ~ 1.66 degree.
 
 % If image is small increase the tolerance a bit.

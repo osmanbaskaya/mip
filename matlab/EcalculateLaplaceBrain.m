@@ -5,8 +5,11 @@ if isempty(LapJ)
    return;
 end
 
-%load lap
-I = I > 150; % removing all csf regions and other regions are 1 now.
+
+intensities = unique(I);
+csf_intens = intensities(2);
+I = I > csf_intens; % removing all csf regions. Other regions are 1 now.
+
 
 C = xor(bwperim(I, 8), I);
 

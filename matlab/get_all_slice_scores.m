@@ -2,7 +2,8 @@ function get_all_slice_scores()
 
 % Bu fonksiyon verilen kesit degerlerindeki tum atrophy degerlerini bulur.
 % Dosyaya yazdirmak icin ise altta bulunan fonksiyonu kullanir.
-% Bu sonuclar daha sonra korelasyon degerleri olculmek icin kullanilacak.
+% Bu sonuclar daha sonra korelasyon degerleri olculmek icin 
+% Python scriptlerince kullanilacak.
 
 
 %% Initialization

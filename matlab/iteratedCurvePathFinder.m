@@ -1,17 +1,19 @@
 function [fullCurveLeft, fullCurveRight, C] = iteratedCurvePathFinder ...
     (I, seedPoints)
 % ITERATEDCURVEPATHFINDER This function measures the left and
-%   right central sulcus in iterative manner. That is, Laplace's
-%   equation are solved first and then normal vectors of laplace results 
-%   are used to determine the direction which we should follow. 
+%   right central sulcus in iterative manner. That is, firstly Laplace's
+%   equation are solved and then normal vectors of laplace results
+%   are used to determine the direction which we should follow.
 %   Whenever we get stucked somewhere, whole process starts with
-%   the original image again until reaching the convex hull of skull.
-%   
+%   the original image again but our starting point is the pixel where
+%   we got stuck. This process lasts until reaching the convex hull of
+%   skull.
+%
 %   We follow this approach because narrow regions of input image, especially
-%   beginning of sulci, immediately goes one which provides us NaN when
+%   beginning of sulci, immediately goes to 1 which provides us NaN when
 %   we calculate gradients of these pixels.
-%   
-%   
+%
+%
 %   Author: Osman Baskaya <osman.baskaya@computer.org>
 %   Date: 22/05/2012
 
@@ -20,14 +22,15 @@ color = '--g';
 leftNotFinished = 1;
 rightNotFinished = 1;
 
-jump = 10;
+jump = 5;
 EPS = 0.001;
 
 
 C = zeros(size(I));
 
-
-J = I > 150; % removing all csf regions and other regions are 1 now.
+intensities = unique(I);
+csf_intens = intensities(2);
+J = I > csf_intens; % removing all csf regions. Other regions are 1 now.
 Conv = bwconvhull(J); %Convex Hull of I
 Conv = bwperim(Conv, 8);
 
@@ -49,6 +52,7 @@ while(1)
         
         i = i + 1;
         LapI = EcalculateLaplaceBrain(I, LapI, jump);
+
         
         change = sum(sum(abs(LapI - prevLapI)));
         
@@ -84,7 +88,7 @@ while(1)
         
         if (~isempty(curvePathLeft))
             idx = sub2ind(size(C), curvePathLeft(:,2), curvePathLeft(:,1));
-            C(idx) = C(idx) + 1;
+            C(idx) = C(idx) + 1; % path ciziliyor burada iki taraftan da.
             if ~isempty(find(Conv(idx) > 0, 1))
                 leftNotFinished = 0;
                 curvePathLeft = [];
@@ -105,8 +109,6 @@ while(1)
         end
         
         if (~leftNotFinished && ~rightNotFinished)
-            %fprintf('Successfully finished. The Last Iteration no: %d\n', i);
-            %fprintf('The last Laplace is %d\n', jump * i);
             break;
         end
         
@@ -126,10 +128,13 @@ while(1)
         denominator = length(fullCurveLeft);
         if (leftNotFinished && all(fullCurveLeft(end, :) == longestCurveLeft(end, :)))
             fprintf('Problem: Left Already Visited!\n')
+            longestCurveLeft = jumpNow('left', J, seedPoints(1:2));
+            fprintf('NewLeftSeed = (%d, %d)\n', longestCurveLeft(1:2));
+            
         elseif (numerator/denominator < 0.5)
-            % Stuck here!
+            % Stuck here! Hic ilerleyemeden bir yere takildi
             longestCurveLeft = [longestCurveLeft; jumpNow('left', J, ...
-                                                    seedPoints(1:2))];
+                seedPoints(1:2))];
         end
     end
     
@@ -140,10 +145,12 @@ while(1)
         
         if (rightNotFinished && all(fullCurveRight(end, :) == longestCurveRight(end, :)))
             fprintf('Problem: Right Already Visited!\n')
+            longestCurveRight = jumpNow('right', J, seedPoints(1:2));
+            fprintf('NewRightSeed = (%d, %d)\n', longestCurveRight(1:2))
         elseif (numerator/denominator < 0.5)
             % Stuck here!
-             longestCurveRight = [longestCurveRight; jumpNow('right', J, ... 
-                                                    seedPoints(3:4))];
+            longestCurveRight = [longestCurveRight; jumpNow('right', J, ...
+                seedPoints(3:4))];
         end
     end
     
